@@ -18,4 +18,6 @@ Route::get('/', function () {
 
 Route::get('/clients', 'ClientsController@index');
 
-Route::get('/products', 'ProductsController@index');
+Route::get('/products', 'ProductController@index');
+
+Route::get('/product', 'ProductController@store');
