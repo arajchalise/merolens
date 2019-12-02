@@ -19,5 +19,12 @@ Route::get('/', function () {
 Route::get('/clients', 'ClientsController@index');
 
 Route::get('/products', 'ProductController@index');
-
+Route::get('/product/{product}', 'ProductController@show');
+Route::get('/product/{id}/destroy', 'ProductController@destroy');
 Route::get('/product', 'ProductController@store');
+Route::get('/orders', 'OrdersController@index');
+//Route::get('/roles', 'RolesController@store');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
