@@ -10,4 +10,9 @@ class Role extends Model
         'name',
         'level'
     ];
+
+    public function User()
+    {
+        return $this->belongsToMany('App\User');
+    }
 }

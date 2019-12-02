@@ -9,7 +9,7 @@ class ProductsController extends Controller
 {
     public function index()
     {
-        return product::All();
+        return view('Products.index');
     }
 
     public function store(Request $request)
@@ -22,5 +22,10 @@ class ProductsController extends Controller
             'photo' => "contact.jpg",
             'price' => '25.77'
         ]);
+    }
+
+    public function destroy($id)
+    {
+        return $id;
     }
 }

@@ -10,7 +10,8 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return product::All();
+        $products = product::All();
+        return view('Products.index', ['products' => $products]);
     }
 
     public function show(Product $product)
@@ -33,7 +34,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         if(DB::table('products')->where('id', '=', $id)->delete()){
-            return "Succefully Deleted";
+            return "Deleted";
         }
     }
 }

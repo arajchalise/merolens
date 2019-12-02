@@ -85,6 +85,8 @@ class RegisterController extends Controller
                 'user_id' => $id,
                 'role_id' => 3
             ));
+
+            return User::find($id);
         }
 
     }

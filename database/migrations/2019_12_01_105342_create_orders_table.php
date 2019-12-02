@@ -17,8 +17,11 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('productId');
             $table->unsignedBigInteger('clientsId');
+            $table->decimal('left_eye_power')->nullable();
+            $table->decimal('right_eye_power')->nullable();
             $table->string('shipping_address');
             $table->decimal('total_amount');
+            $table->integer('status');
             $table->timestamps();
 
             $table->foreign('productId')->references('id')->on('products')->onDelete('cascade');

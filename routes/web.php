@@ -16,14 +16,27 @@ Route::get('/', function () {
 });
 
 
+// clients controller
 Route::get('/clients', 'ClientsController@index');
+Route::get('/client', 'ClientsController@store');
 
+//product controller
 Route::get('/products', 'ProductController@index');
 Route::get('/product/{product}', 'ProductController@show');
 Route::get('/product/{id}/destroy', 'ProductController@destroy');
 Route::get('/product', 'ProductController@store');
-Route::get('/orders', 'OrdersController@index');
+
+
 //Route::get('/roles', 'RolesController@store');
+
+//orders controller
+Route::get('/orders', 'OrdersController@index');
+Route::get('/order/{order}', 'OrdersController@show');
+Route::get('/order', 'OrdersController@makeOrder');
+
+//users controller
+Route::get('/users', 'UsersController@index');
+Route::get('/verifyUser/{user}', 'UsersController@verifyUser');
 
 Auth::routes();
 

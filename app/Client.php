@@ -10,7 +10,7 @@ class Client extends Model
         'name',
         'address',
         'email',
-        'contactNo',
+        // 'contact_no',
         'password'
-    ] 
+    ]; 
 }
