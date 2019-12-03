@@ -7,12 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $fillable = [
-        'productId',
-        'clientsId',
+        'product_id',
+        'client_id',
         'left_eye_power',
         'right_eye_power',
         'shipping_address',
         'total_amount',
         'status'
     ];
+
+    public function client()
+    {
+        return $this->belongsTo('App\Client');
+    }
 }

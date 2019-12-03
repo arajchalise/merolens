@@ -9,18 +9,21 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css')}}/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css') }}/style.css">
 
     <title>Welcome To Mero Lens</title>
 
-   
   </head>
-  <body style="margin-top:0px;">
-
+  <body>
   <!--first nav-->
     <div class="container-fluid" style="background-color: #eaf0f7!important">
       <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:   #eaf0f7!important">
+
+          <a class="navbar-brand" href="/"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
@@ -48,8 +51,8 @@
   <div class="container-fluid" style="background-color: white !important">
     <div class="container pt-2 pb-2">
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="background-color: white !important">
-    <a class="navbar-brand" href="home">
-      <img src="images/logo.jpg" height="70px" width="100px">
+    <a class="navbar-brand" href="/">
+      <img src="{{ asset('images') }}/logo.jpg" height="70px" width="100px">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -106,12 +109,23 @@
       </li>
     </ul>
 
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <form class="form-inline my-2 my-lg-0" style="margin-left: 400px;">
+        <input type="text" placeholder="Search..">
+      </form>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
-          <a class=" btn btn-primary" href="{{ route('createProduct') }}" style="font-family: Abyssinica SIL; font-size: 18px; color: #fff"><b>Add Product</b> <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="{{ route('clientsLogin') }}" style="font-family: Abyssinica SIL; font-size: 18px; color: black"><b>Login</b> <span class="sr-only">(current)</span></a>
         </li>
-        
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ route('clientsRegister') }}" style="font-family: Abyssinica SIL; font-size: 18px; color: black"><b>Reg</b> <span class="sr-only">(current)</span></a>
+        </li>
+
+        <li class="nav-item active pt-3">
+          <img src="{{ asset('images') }}/cart.png" height="30px" width="30px">
+        </li>
       </ul>
           
     </div>
@@ -123,37 +137,72 @@
     </div>
   </div>
 
-  <table class="table">
-    <h1 style="text-align: center; margin-bottom: 30px;">Our users</h1>
-  <thead>
-    <tr>
-      <th scope="col">User ID</th>
-      <th scope="col">Name</th>
-      <th scope="col">Contact No</th>
-      <th scope="col">Email</th>
-      <th scope="col">Role</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach($users as $user)
-    <tr>
-    @if($user->role->name == "Unverified")
-        <tr style="background-color: red; color: #fff;">
-    @endif
-      <th scope="row">{{ $user->id }}</th>
-      <td>{{ $user->name}}</td>
-      <td>{{ $user->contact_no }}</td>
-      <td>{{ $user->email }}</td>
-      <td>{{ $user->role->name }}</td>
-      <td> @if($user->role->name == "Unverified") <a href="/verifyUser/{{ $user->id }}" class="btn btn-primary">Verify</a> @endif <a href="#" class="btn btn-danger">Delete</a></td>
-    </tr>
-    @endforeach
-  </tbody>
-</table>
-  
+  <!--second nav ends-->
 
-  <!--footer-->
+<!--main-->
+
+  <div class="container mb-5 mt-5">
+    <div class="card">
+      <div class="container-fliud">
+        <div class="wrapper row">
+          <div class="preview col-md-6">
+            
+            <div class="preview-pic tab-content">
+              <div class="tab-pane active" id="pic-1"><img src="{{ asset('images')}}/{{ $product[0]->photo[0]->photo}}" /></div>
+            </div>
+            
+          </div>
+          <div class="details col-md-6">
+            <h3 class="product-title">{{$product[0]->name}}</h3>
+            <div class="rating">
+              <div class="stars">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+              </div>
+              <span class="review-no">41 reviews</span>
+            </div>
+            <p class="product-description">{{ $product[0]->description }}</p>
+            <h4 class="price">Current price: <span>Rs. {{ $product[0]->price }}/-</span></h4>
+            <p class="vote"></p>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <select class="form-control" id="exampleFormControlSelect1">
+                      <option>Select Eye</option>
+                      <option>Left</option>
+                      <option>Right</option>
+                    </select>
+                  </div>
+              </div>
+            </div>
+
+            <h5 class="sizes">Sizes:
+              <span class="size" data-toggle="tooltip" title="small">s</span>
+              <span class="size" data-toggle="tooltip" title="medium">m</span>
+              <span class="size" data-toggle="tooltip" title="large">l</span>
+              <span class="size" data-toggle="tooltip" title="xtra large">xl</span>
+            </h5>
+            <h5 class="colors">Color: Black
+              
+            </h5>
+
+            <div class="action">
+              <a href="{{ $product[0]->id }}/addToCart" class="add-to-cart btn btn-default" type="button">Add to cart</a>
+              <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--main ends-->
+
+ <!--footer-->
     <div class="container-fluid" style="background-color: #011129">
       <div class="container">
         <div class="row pt-5">
@@ -267,20 +316,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="{{ asset('js')}}/style.js"></script>
-    <script type="text/javascript">
-      var yourNavigation = $(".nav");
-    stickyDiv = "sticky";
-    yourHeader = $('.header').height();
-
-$(window).scroll(function() {
-  if( $(this).scrollTop() > yourHeader ) {
-    yourNavigation.addClass(stickyDiv);
-  } else {
-    yourNavigation.removeClass(stickyDiv);
-  }
-});
-    </script>
+    <script type="text/javascript" src="{{ asset('js') }}/style.js"></script>
   </body>
 </html>
-

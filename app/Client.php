@@ -10,7 +10,12 @@ class Client extends Model
         'name',
         'address',
         'email',
-        // 'contact_no',
+        'contact_no',
         'password'
     ]; 
+
+    public function order()
+    {
+        return $this->hasMany('App\Order');
+    }
 }

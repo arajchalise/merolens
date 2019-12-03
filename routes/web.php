@@ -11,31 +11,38 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'WelcomeController@index');
 
 
 // clients controller
 Route::get('/clients', 'ClientsController@index');
 Route::get('/client', 'ClientsController@store');
+Route::get('/clients/login', 'ClientsController@clientsLogin')->name('clientsLogin');
+Route::get('/clients/register', 'ClientsController@clientsRegister')->name('clientsRegister');
+
 
 //product controller
 Route::get('/products', 'ProductController@index');
 Route::get('/product/{product}', 'ProductController@show');
 Route::get('/product/{id}/destroy', 'ProductController@destroy');
-Route::get('/product', 'ProductController@store');
+Route::get('/product', 'ProductController@create')->name('createProduct');
+Route::get('product/{product}/addToCart', 'ProductController@addToCart')->name('addToCart');
+Route::get('/product/{product}/productImageStore', 'ProductController@productImageStore')->name('stroreImages');
+Route::get('/product/store', 'ProductController@store')->name('storeProduct');
 
 
-//Route::get('/roles', 'RolesController@store');
+// Route::get('/roles', 'RolesController@store');
 
 //orders controller
 Route::get('/orders', 'OrdersController@index');
 Route::get('/order/{order}', 'OrdersController@show');
 Route::get('/order', 'OrdersController@makeOrder');
+Route::get('/order/{id}/billing', 'OrdersController@billing')->name('billing');
+Route::get('/dispatchedOrder', 'OrdersController@dispatchedOrder')->name('dispatchedOrder');
+
 
 //users controller
-Route::get('/users', 'UsersController@index');
+Route::get('/users', 'UsersController@index')->name('users');
 Route::get('/verifyUser/{user}', 'UsersController@verifyUser');
 
 Auth::routes();

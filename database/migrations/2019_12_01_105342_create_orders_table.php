@@ -15,8 +15,8 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('productId');
-            $table->unsignedBigInteger('clientsId');
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('client_id');
             $table->decimal('left_eye_power')->nullable();
             $table->decimal('right_eye_power')->nullable();
             $table->string('shipping_address');
@@ -24,8 +24,8 @@ class CreateOrdersTable extends Migration
             $table->integer('status');
             $table->timestamps();
 
-            $table->foreign('productId')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('clientsId')->references('id')->on('clients')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
         });
     }
 

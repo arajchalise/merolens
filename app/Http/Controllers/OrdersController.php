@@ -10,12 +10,13 @@ class OrdersController extends Controller
 {
     public function index()
     {
-        if(Auth::check()){
-        $orders =  Order::All();
+        // if(Auth::check()){
+        $orders =  Order::where('status', '=', 0)->with('client')->get();
+        //return $orders;
         return view('Orders.index', ['orders' => $orders]);
-        } else {
-            return redirect()->route('login');
-        }
+        // } else {
+        //     return redirect()->route('login');
+        // }
     }
 
 
@@ -27,10 +28,11 @@ class OrdersController extends Controller
     public function makeOrder()
     {
         return Order::create(array(
-            'productId' => 2,
-            'clientsId' => 1,
+            'product_id' => 2,
+            'client_id' => 1,
             'shipping_address' => "Kirtipur",
-            'total_amount' => 25.20
+            'total_amount' => 25.20,
+            'status' => 0
         ));
     }
 
@@ -38,5 +40,17 @@ class OrdersController extends Controller
     {
         DB::table('orders')->where('id', '=', $id)->delete();
         return "Deleted";
+    }
+
+    public function billing($id)
+    {
+        $order_Detail =  order::find($id)->with('client')->get();
+        return view('Orders.billing', ['order_Detail' => $order_Detail]);
+    }
+
+    public function dispatchedOrder()
+    {
+        $orders =  Order::where('status', '=', 1)->with('client')->get();
+        return view('Orders.dispatchedOrder', ['orders' => $orders]);
     }
 }

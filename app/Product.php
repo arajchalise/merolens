@@ -11,7 +11,12 @@ class Product extends Model
         'brand_name',
         'type',
         'description',
-        'photo',
         'price'
     ];
+
+
+    public function photo()
+    {
+        return $this->hasMany('App\Photo');
+    }
 }

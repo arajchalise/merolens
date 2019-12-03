@@ -73,21 +73,14 @@ class RegisterController extends Controller
             
         // ]);
 
-        $id = DB::table('users')->insertGetId(
+        return User::create(
             array('name' => $data['name'],
             'email' => $data['email'],
             'contact_no' => $data['contact_no'],
+            'roleId' => 3,
             'password' => Hash::make($data['password']))
         );
-
-        if(!is_null($id)){
-            DB::table('role_user')->insert(array(
-                'user_id' => $id,
-                'role_id' => 3
-            ));
-
-            return User::find($id);
         }
 
     }
-}
+

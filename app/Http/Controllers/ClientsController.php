@@ -20,8 +20,18 @@ class ClientsController extends Controller
             'name' => "Biraj",
             'address' => "Kirtipur",
             'email' => "biraj1@gmail.com",
-            // 'contact_no' => "9841101935",
+            'contact_no' => "9841101935",
             'password' => Hash::make("12345678")
         ));
+    }
+
+    public function clientsLogin()
+    {
+        return view('Clients.login');
+    }
+
+    public function clientsRegister()
+    {
+        return view('Clients.register');
     }
 }

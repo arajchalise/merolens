@@ -48,7 +48,7 @@
   <div class="container-fluid" style="background-color: white !important">
     <div class="container pt-2 pb-2">
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="background-color: white !important">
-    <a class="navbar-brand" href="home">
+    <a class="navbar-brand" href="/">
       <img src="images/logo.jpg" height="70px" width="100px">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,7 +109,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
-          <a class=" btn btn-primary" href="{{ route('createProduct') }}" style="font-family: Abyssinica SIL; font-size: 18px; color: #fff"><b>Add Product</b> <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="{{ route('createProduct') }}" style="font-family: Abyssinica SIL; font-size: 18px; color: black"><b>Add Product</b> <span class="sr-only">(current)</span></a>
         </li>
         
       </ul>
@@ -124,29 +124,28 @@
   </div>
 
   <table class="table">
-    <h1 style="text-align: center; margin-bottom: 30px;">Our users</h1>
+    <h1 style="text-align: center; margin-bottom: 30px;">Dispatched Orders</h1>
   <thead>
     <tr>
-      <th scope="col">User ID</th>
+      <th scope="col">Order ID</th>
       <th scope="col">Name</th>
-      <th scope="col">Contact No</th>
-      <th scope="col">Email</th>
-      <th scope="col">Role</th>
+      <th scope="col">Left Eye Power</th>
+      <th scope="col">Right Eye Power</th>
+      <th scope="col">Shipping Address</th>
+      <th scope="col">Total Amount</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
-    @foreach($users as $user)
+    @foreach($orders as $order)
     <tr>
-    @if($user->role->name == "Unverified")
-        <tr style="background-color: red; color: #fff;">
-    @endif
-      <th scope="row">{{ $user->id }}</th>
-      <td>{{ $user->name}}</td>
-      <td>{{ $user->contact_no }}</td>
-      <td>{{ $user->email }}</td>
-      <td>{{ $user->role->name }}</td>
-      <td> @if($user->role->name == "Unverified") <a href="/verifyUser/{{ $user->id }}" class="btn btn-primary">Verify</a> @endif <a href="#" class="btn btn-danger">Delete</a></td>
+      <th scope="row">{{ $order->id }}</th>
+      <td>{{ $order->client->name}}</td>
+      <td>{{ $order->left_eye_power }}</td>
+      <td>{{ $order->right_eye_power }}</td>
+      <td>{{ $order->shipping_address }}</td>
+      <td>{{ $order->total_amount }}</td>
+      <td><a href="#" class="btn btn-danger">Remove</a></td>
     </tr>
     @endforeach
   </tbody>
