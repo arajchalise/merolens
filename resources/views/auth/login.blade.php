@@ -11,7 +11,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="container mt-5" style="background-color:  #e7edf5">
+                    <h4 style="color:  #042f70; text-align: center;" class="pt-2 pb-2"><b>User Login</b></h4>
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
