@@ -10,7 +10,13 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('css')}}/style.css">
-
+    <style type="text/css">
+      .card{
+        margin: 0 auto;
+        float: none;
+        margin-bottom: 10px;
+      }
+    </style>
     <title>Welcome To Mero Lens</title>
 
    
@@ -110,7 +116,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
       <form class="form-inline my-2 my-lg-0" style="margin-left: 400px;">
-        <input type="text" placeholder="Search..">
+        <input type="text" placeholder="Search.." id="searchProduct" onchange="searchProduct();">
       </form>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
@@ -120,9 +126,30 @@
           <a class="nav-link" href="{{ route('clientsRegister') }}" style="font-family: Abyssinica SIL; font-size: 18px; color: black"><b>Reg</b> <span class="sr-only">(current)</span></a>
         </li>
 
-        <li class="nav-item active pt-3">
-          <img src="{{asset('images')}}/cart.png" height="30px" width="30px">
-        </li>
+        <!-- <li class="nav-item active pt-3">
+          <button id="cart"><img src="{{asset('images')}}/cart.png" height="30px" width="30px" ></button>
+        </li> -->
+        <li class="nav-item dropdown">
+        <a href="#" style="font-family: Abyssinica SIL; font-size: 18px; color: black; margin-top: 20px;" id="showCart" onclick="showCart();">
+          <img src="{{asset('images')}}/cart.png" height="30px" width="30px" ><span class="badge badge-dark" style="background-color: green; font-family: Arial;">
+            @if(Session::has('cart'))
+          {{ $count = count(Session::get('cart'))}}</span>
+        </a>
+        @if($count != 0)
+        <div id="carts" style="display: none; position: absolute; background-color: #343a40; color: #fff; min-height: 200px; min-width: 450px; z-index: 1000; margin-left: -350px; margin-top: 20px;">
+            <table class="table table-dark">
+              <th scope="col">Product Name</th>
+              <th scope="col">Qty</th>
+              <th scope="col">Amount</th>
+              <tbody id="tbl">
+                
+              </tbody>
+            </table>
+            <a href="{{ route('checkout')}}" class="btn btn-success" style="float: right; margin-bottom: 20px; margin-right: 10px;">Checkout</a>
+        </div>
+        @endif
+        @endif
+      </li>
       </ul>
           
     </div>

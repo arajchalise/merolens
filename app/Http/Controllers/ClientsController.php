@@ -16,13 +16,13 @@ class ClientsController extends Controller
 
     public function store()
     {
-        return Client::create(array(
-            'name' => "Biraj",
-            'address' => "Kirtipur",
-            'email' => "biraj1@gmail.com",
-            'contact_no' => "9841101935",
-            'password' => Hash::make("12345678")
-        ));
+        // return Client::create(array(
+        //     'name' => "Biraj",
+        //     'address' => "Kirtipur",
+        //     'email' => "biraj1@gmail.com",
+        //     'contact_no' => "9841101935",
+        //     'password' => Hash::make("12345678")
+        // ));
     }
 
     public function clientsLogin()
@@ -33,5 +33,17 @@ class ClientsController extends Controller
     public function clientsRegister()
     {
         return view('Clients.register');
+    }
+
+    public function checkout(Request $request)
+    {
+        $sessions = $request->session()->get('cart');
+        return view('Clients.checkout', ['sessions' => $sessions]);
+    }
+
+    public function billing()
+    {
+        return "We are Here";
+
     }
 }

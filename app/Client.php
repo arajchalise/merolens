@@ -18,4 +18,9 @@ class Client extends Model
     {
         return $this->hasMany('App\Order');
     }
+
+    public function review()
+    {
+        return $this->hasMany('App\Review');
+    }
 }

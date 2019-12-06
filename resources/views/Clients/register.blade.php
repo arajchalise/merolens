@@ -7,27 +7,45 @@
     <div class="container mt-5 mb-5">
       <form>
 
-        <div class="form-group">
-          <label for="exampleInputEmail1">Name</label>
-          <input type="text" class="form-control"  placeholder="Full Name"> 
+         {{ csrf_field() }}
+        <div class="form-row">
+          <div class="col">
+            <label for="first_name">First Name*</label>
+            <input type="text" class="form-control" placeholder="First Name" id="first_name" required name="first_name">
+          </div>
+          <div class="col">
+            <label for="last_name">Last Name*</label>
+            <input type="text" class="form-control" placeholder="Last Name" id="last_name" required name="last_name">
+          </div>
         </div>
 
         <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"> 
+          <label for="address">Address*</label>
+          <input type="text" class="form-control" id="address" placeholder="Address"required >
+        </div>
+
+        <div class="form-row">
+          <div class="col">
+              <label for="email">Email address*</label>
+              <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="Enter email" name="email" required> 
+          </div>
+          <div class="col">
+              <label for="contactNo">Contact No*</label>
+              <input type="text" class="form-control" id="contactNo" aria-describedby="emailHelp" placeholder="Enter Contact Number" name="contact_no" required> 
+          </div>
         </div>
 
         <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          <label for="password">Password*</label>
+          <input type="password" class="form-control" id="password" placeholder="Password" required>
         </div>
         
         <div class="form-group">
-          <label for="exampleInputPassword1">Confirm Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password">
+          <label for="confirmPassword">Confirm Password*</label>
+          <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
         </div>
 
-        <button type="submit" class="btn btn-info">Submit</button>
+        <button type="submit" class="btn btn-info">Register</button>
       </form>
     </div>
   <!--login end-->

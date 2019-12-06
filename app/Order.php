@@ -12,6 +12,7 @@ class Order extends Model
         'left_eye_power',
         'right_eye_power',
         'shipping_address',
+        'qty',
         'total_amount',
         'status'
     ];
@@ -19,5 +20,10 @@ class Order extends Model
     public function client()
     {
         return $this->belongsTo('App\Client');
+    }
+
+    public function holdOrder()
+    {
+        return $this->hasOne('App\HoldOrder');
     }
 }

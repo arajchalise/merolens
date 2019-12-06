@@ -10,7 +10,13 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('css')}}/style.css">
-
+    <style type="text/css">
+      .card{
+        margin: 0 auto;
+        float: none;
+        margin-bottom: 10px;
+      }
+    </style>
     <title>Welcome To Mero Lens</title>
 
    
@@ -37,6 +43,9 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ route('dispatchedOrder') }}">Dispatched Orders</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('holdedOrder') }}">Hold Orders</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ route('clients') }}">Clients</a>

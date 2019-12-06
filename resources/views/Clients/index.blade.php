@@ -24,6 +24,4 @@
     @endforeach
   </tbody>
 </table>
-  
   @include('Includes.footer')
-

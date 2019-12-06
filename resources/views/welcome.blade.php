@@ -53,22 +53,22 @@
 
       <div class="row">
 
-        @foreach($products as $product)
+        @for($i = 0; $i < 4; $i++)
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-5 pt-3">
             <div class="card" style="width: 15rem; border-color:  #0b397a">
             <div class="hovereffect">
-              <img class="img-responsive" src="{{ asset('images') }}/{{ $product->photo[0]->photo }}" alt="" height="300px" width="250px">
+              <img class="img-responsive" src="{{ asset('images') }}/{{ $products[$i]->photo[0]->photo }}" alt="" height="300px" width="250px">
 
                 <div class="overlay">
-                  <h2>{{ $product->name }}</h2>
+                  <h2>{{ $products[$i]->name }}</h2>
                   <p>
-                    <a href="product/{{ $product->id }}" style="color: black;">View Detail</a>
+                    <a href="product/{{ $products[$i]->id }}" style="color: black;">View Detail</a>
                   </p>
                 </div>
             </div>
           </div>  
           </div>
-        @endforeach
+        @endfor
 
       </div>
 
@@ -151,7 +151,7 @@
   <!--new arrival ends-->
 
   <!--banner image-->
-    <div class="container-fluid">
+    <div class="container-fluid" style="min-height: 350px;">
 
       <div class="row">
       <div class="col-lg-8 col-md-10 col-sm-12" style="background-color: black">
@@ -186,20 +186,20 @@
 
       </div>
       <div class="col-lg-4">
-          <img src="images/img5.jpg" width="590px" height="350px">
+          <img src="images/img5.jpg" width="100%" height="100%">
         </div>
     </div>
-    </div><br>
+    </div>
   <!--banner image end-->
-
+<div class="clearfix"></div>
   <!--image-->
     <div class="container mt-5 mb-5 mx-auto">
-      <h2 style="text-align: center;font-family: Abyssinica SIL;color:  #0b397a"><b>SHOP NOW</b></h2><br>
+      <h2 style="text-align: center;font-family: Abyssinica SIL;color:  #0b397a; clear: both;"><b>SHOP NOW</b></h2><br>
       <p style="text-align: center; font-size: 18px; font-family: Abyssinica SIL;">
         Eye chasmish are very important for thos whos have some difficult<br> in their eye to see every hing clearly and perfectly
       </p><br>
 
-      <img src="images/img8.jpg" width="1000px" height="450px">
+      <img src="images/img8.jpg" width="100%" height="100%">
     </div>
   <!--image ends-->
 
@@ -234,7 +234,7 @@
   <!--featured glasses end-->
 
   <!--products-->
-    <div style="background-color:  #cad7e9; height: 250px">
+    <div style="background-color:  #cad7e9; min-height: 250px">
       <div class="container">
         <div class="row">
 

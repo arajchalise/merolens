@@ -11,6 +11,7 @@ class Product extends Model
         'brand_name',
         'type',
         'description',
+        'stock',
         'price'
     ];
 
@@ -18,5 +19,10 @@ class Product extends Model
     public function photo()
     {
         return $this->hasMany('App\Photo');
+    }
+
+    public function review()
+    {
+        return $this->hasMany('App\Review');
     }
 }

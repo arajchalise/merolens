@@ -26,9 +26,11 @@ Route::get('/products', 'ProductController@index')->name('products');
 Route::get('/product/{product}', 'ProductController@show');
 Route::get('/product/{id}/destroy', 'ProductController@destroy');
 Route::get('/product', 'ProductController@create')->name('createProduct');
-Route::get('product/{product}/addToCart', 'ProductController@addToCart')->name('addToCart');
+Route::post('/addToCart', 'ProductController@addToCart')->name('addToCart');
 Route::get('/product/{product}/productImageStore', 'ProductController@productImageStore')->name('stroreImages');
-Route::get('/product/store', 'ProductController@store')->name('storeProduct');
+Route::post('/product', 'ProductController@store')->name('storeProduct');
+Route::get('/showCart', 'ProductController@showCart')->name('showCart');
+Route::get('/removeCart/{id}', 'ProductController@removeCart');
 
 
 // Route::get('/roles', 'RolesController@store');
@@ -36,14 +38,20 @@ Route::get('/product/store', 'ProductController@store')->name('storeProduct');
 //orders controller
 Route::get('/orders', 'OrdersController@index')->name('orders');
 Route::get('/order/{order}', 'OrdersController@show');
-Route::get('/order', 'OrdersController@makeOrder');
-Route::get('/order/{id}/billing', 'OrdersController@billing')->name('billing');
+//Route::get('/order', 'OrdersController@makeOrder');
+Route::get('/billing', 'ClientsController@billing')->name('billing');
 Route::get('/dispatchedOrder', 'OrdersController@dispatchedOrder')->name('dispatchedOrder');
-
+Route::get('/order/{id}/dispatch', 'OrdersController@dispatch');
+Route::get('/checkout', 'ClientsController@checkout')->name('checkout');
+Route::get('/hold', 'OrdersController@hold')->name('hold');
+Route::get('/holdedOrder', 'OrdersController@holdedOrder')->name('holdedOrder');
 
 //users controller
 Route::get('/users', 'UsersController@index')->name('users');
 Route::get('/verifyUser/{user}', 'UsersController@verifyUser');
+
+
+Route::get('/getStock/{id}',  'ProductController@getStock');
 
 Auth::routes();
 
