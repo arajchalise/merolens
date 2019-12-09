@@ -29,15 +29,17 @@ class ProductController extends Controller
         return view('Products.create');
     }
 
+    public function edit($id)
+    {
+        $product = Product::where('id', '=', $id)->with('photo')->get();
+        //return $product;
+        return view('Products.edit', ['product' => $product]);
+    }
+
     public function store(Request $request)
     {
-        $file = $request->file('photo');
-        $name = str_replace(":", "_", $request->product_name);
-        $name = str_replace("?", "_", $name);
-        $name = str_replace(" ", "_", $name);
-        $ext = $file->getClientOriginalExtension();
-        if ($file->move("images/", "{$name}.{$ext}")){
-           $id =  product::create([
+        $i = 0;
+        $id =  product::create([
             'name' => $request->product_name,
             'type' => $request->product_category,
             'brand_name' => $request->brand_name,
@@ -45,14 +47,57 @@ class ProductController extends Controller
             'stock' => $request->stock,
             'price' => $request->product_price
         ])->id;
-        photo::create([
-            'product_id' => $id,
-            'photo' => $name.".".$ext
-        ]);
-        return redirect()->route('products');
-        } else{
+
+        foreach (array_combine($_FILES['photo']['name'], $_FILES['photo']['tmp_name']) as $photo => $tmp) {
+            $ext = explode(".", $photo);
+            var_dump($ext[1]);
+             if(move_uploaded_file($tmp, "images/".$id."_".$i.".jpg")){
+                photo::create([
+                    'product_id' => $id,
+                    'photo' => $id."_".$i.".".$ext[1]
+                ]);
+             } else{
             return "Error Uploading file";
+            }
+            $i++;
+         } 
+        return redirect()->route('products');
+    }
+
+    public function update(Request $request)
+    {
+        $id = $request->id;
+        $photos = \DB::table('photos')->where('id', \DB::raw("(select max(`id`) from photos where product_id = {$id})"))->get();
+        $i = explode("_", $photos[0] ->photo);
+        $i = explode(".", $i[1]);
+        $j = $i[0]+1;
+        if($i == null){
+            $j = 0;
         }
+            $update = product::where('id', '=', $id)->update([
+            'name' => $request->product_name,
+            'type' => $request->product_category,
+            'brand_name' => $request->brand_name,
+            'description' => $request->product_description,
+            //'stock' => $request->stock,
+            'price' => $request->product_price
+            ]);
+
+          if(!empty($_FILES['photo'])){
+            foreach (array_combine($_FILES['photo']['name'], $_FILES['photo']['tmp_name']) as $photo => $tmp) {
+            $ext = explode(".", $photo);
+             if(move_uploaded_file($tmp, "images/".$id."_".$j.".jpg")){
+                photo::create([
+                    'product_id' => $id,
+                    'photo' => $id."_".$j.".".$ext[1]
+                ]);
+             } else{
+            return "Error Uploading file";
+            }
+            $i++;
+         }
+          }
+         return redirect()->route('products');
     }
 
     public function addToCart(Request $request)
@@ -62,8 +107,10 @@ class ProductController extends Controller
             'name' => $request->name,
             'qty' => $request->qty,
             'amt' => $request->price*$request->qty,
+            'price' => $request->price,
             'lp' => $request->leftEye,
-            'rp' => $request->rightEye
+            'rp' => $request->rightEye,
+            'photo' => $request->photo
         );
         $request->session()->push('cart', $cart);
         return redirect()->route('welcome'); 
@@ -79,6 +126,17 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
+    public function updateCart(Request $request)
+    {
+        $qty = $request->get('qty');
+        $id = $request->get('id');
+        $sessions = $request->session()->get('cart');
+        $sessions[$id]['qty'] = $qty;
+        $sessions[$id]['amt'] = $sessions[$id]['price']*$qty;
+        $request->session()->put('cart', $sessions);
+        return $request->session()->get('cart');
+    }
+
     public function showCart(Request $request)
     {
         $sessions = $request->session()->get('cart');
@@ -88,7 +146,7 @@ class ProductController extends Controller
     public function getStock($id)
     {
         $prod = product::find($id);
-        return $prod['id'];
+        return $prod['stock'];
     }
 
     public function productImageStore(product $product)
@@ -102,6 +160,10 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
+        $phots = Photo::where('product_id', '=', $id)->get();
+        foreach ($photos as $photo) {
+            unlink("images/".$photo->photo);
+        }
         if(DB::table('products')->where('id', '=', $id)->delete()){
             return "Deleted";
         }

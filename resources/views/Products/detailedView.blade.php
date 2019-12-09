@@ -1,45 +1,49 @@
 @include('Includes.header')
 <!--main-->
-
-  <div class="container mb-5 mt-5">
+<div class="container mb-5 mt-5">
     <div class="card">
       <div class="container-fliud">
         <div class="wrapper row">
-          <div class="preview col-lg-6 col-md-6">
+          <div class="preview col-md-6">
+            
             <div class="preview-pic tab-content">
-              <div class="tab-pane active" id="pic-1"><img src="{{ asset('images')}}/{{ $product[0]->photo[0]->photo}}" style="width: 100%;" /></div>
+              @foreach($product[0]->photo as $photo)
+                <div class="tab-pane active" id="pic-{{ $photo->id }}"><img src="{{ asset('images') }}/{{ $photo->photo }}" style="width: 100%;" /></div>
+              @endforeach
             </div>
+            <ul class="preview-thumbnail nav nav-tabs">
+              @foreach($product[0]->photo as $photo)
+                <li class="active"><a data-target="#pic-{{ $photo->id }}" data-toggle="tab"><img src="{{ asset('images') }}/{{ $photo->photo }}" /></a></li>
+              @endforeach
+            </ul>
             
           </div>
           <div class="details col-md-6">
-            <h3 class="product-title">{{$product[0]->name}}</h3>
+            <h3 class="product-title">{{ $product[0]->name }}</h3>
             <div class="rating">
               <div class="stars">
-                <span class="fa fa-star " ></span>
-                <span class="fa fa-star "></span>
-                <span class="fa fa-star "></span>
-                <span class="fa fa-star "></span>
-                <span class="fa fa-star "></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
               </div>
-              <span class="review-no">41 reviews</span>
+              <span class="review-no"><a href="#review">41 reviews</a></span>
             </div>
-            <p class="product-description" style="width: 90%; margin-right: auto;">{{ $product[0]->description }}</p>
-            <h4 class="price">Current Price: <span>Rs. {{ $product[0]->price }}/-</span></h4>
-            <p class="vote"></p>
-
+            <p class="product-description">{!! $product[0]->description !!}</p>
+            <h4 class="price">Current price: <span>Rs. {{ $product[0]->price }}/-</span></h4>
             <h5 class="sizes">Sizes:
               <span class="size" data-toggle="tooltip" title="small">s</span>
               <span class="size" data-toggle="tooltip" title="medium">m</span>
               <span class="size" data-toggle="tooltip" title="large">l</span>
               <span class="size" data-toggle="tooltip" title="xtra large">xl</span>
             </h5>
-            <h5 class="colors">Color: Black
-              
-            </h5>
+            <h5 class="colors">Color: Black </h5>
 
             <div class="action">
              <form action="{{ route('addToCart') }}" method="POST">
               {{ csrf_field() }}
+              <input type="text" name="photo" value="{{ $product[0]->photo[0]->photo }}" hidden>
               <input type="text" name="id" value="{{ $product[0]->id }}" hidden id="id">
               <input type="text" name="price" value="{{ $product[0]->price }}" hidden>
               <input type="text" name="name" value="{{ $product[0]->name }}" hidden>
@@ -67,39 +71,38 @@
             
           
             </div>
-          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="container">
+</div>
+<!--main ends-->
+
+<!-- Reviews -->
+  <div class="container" id="review">
     <h3>Ratings and Reviews of {{ $product[0]->name }}</h3>
+    @if(Session::has('client'))
+      <form action="{{ route('storeReview') }}" method="post">
+        {{ csrf_field() }}
+        <input type="text" name="product_id" value="{{ $product[0]->id }}" hidden>
+        <div class="row">
+            <div class="form-group col-10">
+            <textarea class="form-control" rows="3" id="comment" name="review"></textarea>
+            </div>
+            <div class="col-2"><input type="submit" name="" value="Send Review" style="margin-top: 15%;" class="btn btn-success"></div>
+        </div>
+      </form>
+    @endif
     <div class="reviews" style="min-height: 200px;">
         <h5>By: Clients Name </h5>
+                <span class="fa fa-star checked" ></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star "></span>
+                <span class="fa fa-star "></span>
         <p>Video provides a powerful way to help you prove your point. When you click Online Video, you can paste in the embed code for the video you want to add. You can also type a keyword to search online for the video that best fits your document. To make your document look professionally produced, Word provides header, footer, cover page, and text box designs that complement each other.</p>
     </div>
   </div>
-  <script>
-    jQuery.noConflict(); // prevent conflicts with prototype
-  </script>
+<!-- Reviews Ends  -->
 
-  <script type="text/javascript">
-    function myFunct() {
-      var id = document.getElementById('id').value;
-      var qty = parseInt(document.getElementById('qty').value);
-      jQuery.get('/getStock/'+id, function(data) {
-         var c = parseInt(data);
-         document.getElementById('qty').max = data;
-          var remaining = data-qty;
-          if(remaining <= 0){
-            jQuery('#stock').html('Out of Stock');
-          } else{
-            jQuery('#stock').html(remaining+" Items left");
-          }
-          
-      });
-    }
-  </script>
-
-<!--main ends-->
  @include('Includes.footer')

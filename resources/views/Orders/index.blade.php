@@ -14,6 +14,7 @@
       <th scope="col">Name</th>
       <th scope="col">Left Eye Power</th>
       <th scope="col">Right Eye Power</th>
+      <th scope="col">Receiver's Name</th>
       <th scope="col">Shipping Address</th>
       <th scope="col">Total Amount</th>
       <th scope="col">Action</th>
@@ -23,9 +24,10 @@
     @foreach($orders as $order)
     <tr>
       <th scope="row">{{ $order->id }}</th>
-      <td>{{ $order->client->name}}</td>
+      <td>{{ $order->product->name}}</td>
       <td>{{ $order->left_eye_power }}</td>
       <td>{{ $order->right_eye_power }}</td>
+      <td>{{ $order->receipent_name }}</td>
       <td>{{ $order->shipping_address }}</td>
       <td>{{ $order->total_amount }}</td>
       <td><a href="/order/{{ $order->id }}/dispatch" class="btn btn-primary">Dispatch</a> <form action="{{ route('hold') }}" style="float: right; margin-right: 20px;">

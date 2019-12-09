@@ -5,16 +5,17 @@
     </div>
 
     <div class="container mt-5 mb-5">
-      <form action="#">
+      <form action="{{ route('clientLogin')}}" method="POST">
+        {{ csrf_field()}}
+        <input type="text" name="url" value="{{ str_replace(url('/'), '', url()->previous()) }}" hidden>
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email">
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password" required>
         </div>
-        
         <button type="submit" class="btn btn-info">Login</button>
       </form>
     </div>

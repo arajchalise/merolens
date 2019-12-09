@@ -19,10 +19,15 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('client_id');
             $table->decimal('left_eye_power')->nullable();
             $table->decimal('right_eye_power')->nullable();
+            $table->string('receipent_name');
+            $table->string('receipent_contact');
+            $table->string('receipent_email');
             $table->string('shipping_address');
             $table->integer('qty');
             $table->decimal('total_amount');
             $table->integer('status');
+            $table->string('shipping_method');
+            $table->string('payment_method');
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

@@ -15,8 +15,8 @@
                 <div class="overlay">
                   <h2>{{ $product->name }}</h2>
                   <p>
-                    <a href="product/{{ $product->id }}" style="color: black;">Edit Product</a><br><br>
-                    <a href="product/{{ $product->id }}" style="color: black;">Delete Product</a>
+                    <a href="product/{{ $product->id }}/edit" style="color: black;">Edit Product</a><br><br>
+                    <a href="#" style="color: black;" onclick="deleteProduct({{ $product->id }});">Delete Product</a>
                   </p>
                 </div>
             </div>

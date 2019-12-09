@@ -115,14 +115,34 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{{ asset('js')}}/style.js"></script>
-    
-    <script type="text/javascript">
-      var yourNavigation = $(".nav");
-    stickyDiv = "sticky";
-    yourHeader = $('.header').height();
+    <script>
+    jQuery.noConflict(); // prevent conflicts with prototype
+  </script>
 
-$(window).scroll(function() {
-  if( $(this).scrollTop() > yourHeader ) {
+  <script type="text/javascript">
+    function myFunct() {
+      var id = document.getElementById('id').value;
+      var qty = parseInt(document.getElementById('qty').value);
+      jQuery.get('/getStock/'+id, function(data) {
+         var c = parseInt(data);
+         document.getElementById('qty').max = data;
+          var remaining = data-qty;
+          if(remaining <= 0){
+            jQuery('#stock').html('Out of Stock');
+          } else{
+            jQuery('#stock').html(remaining+" Items left");
+          }
+          
+      });
+    }
+  </script>
+    <script type="text/javascript">
+      var yourNavigation = jQuery(".nav");
+    stickyDiv = "sticky";
+    yourHeader = jQuery('.header').height();
+
+jQuery(window).scroll(function() {
+  if( jQuery(this).scrollTop() > yourHeader ) {
     yourNavigation.addClass(stickyDiv);
   } else {
     yourNavigation.removeClass(stickyDiv);
@@ -135,8 +155,9 @@ $(window).scroll(function() {
       jQuery.get('/showCart', function (data) {
         jQuery('#carts').toggle('fast');
         while(data[i] != null) {
-          var link = '<td><a href=/removeCart/'+i+'>X</a</td>'
-            dt += "<tr><td>"+data[i]['name']+"</td><td>"+data[i]['qty']+"</td><td>"+data[i]['amt']+"</td>"+link+"</tr>";
+          var link = '<td><a href="#" onclick=removeFromCart('+i+')><span class="badge" style="background-color: red; color: #fff;">X</span></a</td>'
+          var img = "<td><img src={{ asset('images') }}/"+data[i]['photo']+" style='width: 40px; height: 40px;'></td>"
+            dt += "<tr>"+img+"<td>"+data[i]['name']+"</td><td><input type=number name=qty id=qty"+i+" value="+data[i]['qty']+" onchange=updateQty("+i+") min=1 style=width:50px;></td><td>"+data[i]['amt']+"</td>"+link+"</tr>";
             console.log(link);
             i++;
         }
@@ -144,9 +165,96 @@ $(window).scroll(function() {
       })
     }
 
-    function searchProduct() {
-      var text = document.getElementById('searchProduct').value;
-      alert(text);
+    jQuery(document).ready(function() {
+        jQuery('#searchProduct').keyup(function(){
+            var q = jQuery(this).val();
+            if(q != ''){
+              var _token = jQuery('input[name = "_token"]').val();
+
+              jQuery.ajax({
+                url: "{{ route('autocomplete') }}",
+                method: "POST",
+                data: {q:q, _token:_token},
+                success: function(data) {
+                  jQuery('#autocomplete').fadeIn();
+                 jQuery('#autocomplete').html(data);
+                }
+              })
+            } else {
+              jQuery('#autocomplete').fadeOut();
+            }
+        });
+
+        jQuery('#confirmPassword').keyup(function() {
+          var confirmPassword = jQuery(this).val();
+          var password = jQuery('#password').val();
+
+          if(password != confirmPassword){
+            jQuery('#confirmPassword').css('color', 'red');
+          } else{
+            jQuery('#confirmPassword').css('color', 'green');
+          }
+        });
+    });
+
+
+    function getShippingAddr() {
+      if(jQuery('#gridCheck').prop('checked')){
+        jQuery('#shippingAddr').css('display', 'block');
+      } else {
+        jQuery('#shippingAddr').css('display', 'none');
+      }
+    }
+
+    function getPaymentMethod() {
+      if(jQuery('#customRadio1').prop('checked')){
+        jQuery('#paypal').css('display', 'block');
+        jQuery('#cards').css('display', 'none');
+      } else {
+        jQuery('#cards').css('display', 'block');
+        jQuery('#paypal').css('display', 'none');
+      }
+    }
+
+    function removePic(id) {
+      jQuery.get('/removePic/'+id, function(data) {
+        if(data != null){
+          location.reload(true);
+        }
+      });
+    }
+
+    function deleteProduct(id) {
+      if(confirm("You want to delete this?? ")){
+          jQuery.get('product/'+id+'/destroy');
+          location.reload(true);
+      } else {
+        location.reload(true);
+      } 
+    }
+
+    function removeFromCart(id) {
+      if(confirm("Remove Item??")){
+        jQuery.get('/removeCart/'+id);
+        location.reload(true);
+      }
+    }
+
+    function updateQty(id) {
+      var qty = jQuery('#qty'+id).val();
+      var _token = jQuery('input[name = "_token"]').val();
+      jQuery.ajax({
+                url: "{{ route('updateCart') }}",
+                method: "POST",
+                data: {qty:qty, id:id, _token:_token},
+                success: function(data) {
+                  location.reload(true);
+                }
+              })
+    }
+
+    function processCheckout() {
+
     }
     </script>
   </body>

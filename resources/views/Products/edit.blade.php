@@ -7,33 +7,36 @@
     </div>
 
     <div class="container mt-5 mb-5">
-      <form method="POST" action="{{ route('storeProduct') }}" enctype='multipart/form-data'novalidate>
+      <form method="POST" action="{{ route('updateProduct') }}" enctype='multipart/form-data'novalidate>
           {{ csrf_field() }}
+          <input type="text" name="id" value="{{ $product[0]->id }}" hidden>
         <div class="form-row">
           <div class="col">
             <label for="product_name">Product Name*</label>
-            <input type="text" class="form-control" placeholder="Product Name" id="product_name" required name="product_name">
+            <input type="text" class="form-control" placeholder="Product Name" id="product_name" required name="product_name" value="{{ $product[0]->name }}">
           </div>
           <div class="col">
             <label for="brand_name">Brand Name*</label>
-            <input type="text" class="form-control" placeholder="Brand Name" id="brand_name" required name="brand_name">
+            <input type="text" class="form-control" placeholder="Brand Name" id="brand_name" required name="brand_name" value="{{ $product[0]->brand_name }}">
           </div>
         </div>
         <div class="form-row">
           <div class="col">
             <label for="product_category">Product Category*</label>
-            <input type="text" class="form-control" placeholder="Product Category" id="product_category" required name="product_category">
+            <input type="text" class="form-control" placeholder="Product Category" id="product_category" required name="product_category" value="{{ $product[0]->type }}">
           </div>
           <div class="col">
             <label for="product_price">Product Price*</label>
-            <input type="text" class="form-control" placeholder="Product Price" id="product_price" required name="product_price">
+            <input type="text" class="form-control" placeholder="Product Price" id="product_price" required name="product_price" value="{{ $product[0]->price }}">
           </div>
         </div>
         <div class="form-group">
           <label for="stock">Stock*</label>
-          <input type="text" class="form-control" id="stock" aria-describedby="stock" placeholder="Enter stock" name="stock">
+          <input type="text" class="form-control" id="stock" aria-describedby="stock" placeholder="Enter stock">
         </div>
-          <textarea rows="15" required name="product_description"></textarea>
+          <textarea rows="15" required name="product_description">
+            {{ $product[0]->description }}
+          </textarea>
         
         <div class="input-group">
           <div class="input-group-prepend">
@@ -49,6 +52,12 @@
         <br><br>
         <button type="submit" class="btn btn-info">Submit</button>
       </form>
+      @foreach($product[0]->photo as $photo)
+        <div>
+          <img src="{{ asset('images') }}/{{ $photo->photo }}">
+          <button id="removePic" style="position: absolute;" onclick="removePic({{ $photo->id }});"><span class="badge">X</span></button>
+        </div>
+      @endforeach
     </div>
   <!--login end-->
 @include('Includes.footer')
