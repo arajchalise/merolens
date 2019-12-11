@@ -83,11 +83,10 @@ class ProductController extends Controller
             'type' => $request->product_category,
             'brand_name' => $request->brand_name,
             'description' => $request->product_description,
-            //'stock' => $request->stock,
+            'stock' => $request->stock,
             'price' => $request->product_price
             ]);
-
-          if(!empty($_FILES['photo'])){
+          if($request->hasFile('photo')){
             foreach (array_combine($_FILES['photo']['name'], $_FILES['photo']['tmp_name']) as $photo => $tmp) {
             $ext = explode(".", $photo);
              if(move_uploaded_file($tmp, "images/".$id."_".$j.".jpg")){

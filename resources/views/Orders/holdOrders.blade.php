@@ -31,7 +31,7 @@
       <td>{{ $order->total_amount }}</td>
       <td>{{ $order->holdOrder->reason }}</td>
       <td>@if(Auth::user()->role_id == 1)<a href="#" class="btn btn-danger">Remove</a>@endif
-          <a href="#" class="btn btn-primary">Dispatch</a>
+          <a href="/order/{{ $order->id }}/dispatch" class="btn btn-primary">Dispatch</a>
       </td>
     </tr>
     @endforeach

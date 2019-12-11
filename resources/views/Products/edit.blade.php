@@ -32,7 +32,7 @@
         </div>
         <div class="form-group">
           <label for="stock">Stock*</label>
-          <input type="text" class="form-control" id="stock" aria-describedby="stock" placeholder="Enter stock">
+          <input type="text" class="form-control" id="stock" aria-describedby="stock" placeholder="Enter stock" value="{{ $product[0]->stock }}" name="stock">
         </div>
           <textarea rows="15" required name="product_description">
             {{ $product[0]->description }}
