@@ -9,6 +9,7 @@ use App\Order;
 use App\HoldOrder;
 use App\Client;
 use App\Product;
+use DB;
 
 class OrdersController extends Controller
 {
@@ -17,9 +18,9 @@ class OrdersController extends Controller
         // if(Auth::check()){
         $orders =  Order::where('status', '=', 0)
                     ->with('client')
-                    ->with('product')
-                    ->get();
-        //return $orders;
+                    ->with('product', 'Product.photo')
+                    ->paginate(20);
+        // return $orders;
         return view('Orders.index', ['orders' => $orders]);
         // } else {
         //     return redirect()->route('login');
@@ -36,7 +37,8 @@ class OrdersController extends Controller
     {
         $id = 0;
         if($request->session()->has('client')){
-
+            $client = $request->session()->get('client');
+            $id = $client[0]->id;
         } else {
             $client = Client::where('email', '=', $request->email)->get();
             if(!empty($client[0])){
@@ -59,6 +61,7 @@ class OrdersController extends Controller
                 'password' => md5($request->password)
             ])->id;
             }
+        }
             if($request->ship =='Y'){
             $rName = $request->sFirstName." ".$request->sLastName;
             $rContact = $request->sContactNo;
@@ -98,23 +101,20 @@ class OrdersController extends Controller
             }
             $request->session()->forget('cart');
             return $this->generateInvoice($order_id);
-        }
-        
-
-
-
     }
 
-    public function generateInvoice($order_id)
+    public function generateInvoice($order)
     {
         $i = 0;
-        foreach ($order_id as $id) {
+        foreach ($order as $id) {
             $orders[$i] = Order::where('id', '=', $id)
-                            ->with('client')
-                            ->with('product')->get();
+                        ->with('client')
+                        ->with('product', 'product.photo')
+                        ->get();
             $i++;
         }
         return view('Orders.invoice', ['orders' => $orders]);
+        // return $orders[0];
     }
 
     public function destroy($id)
@@ -126,13 +126,19 @@ class OrdersController extends Controller
 
     public function dispatchedOrder()
     {
-        $orders =  Order::where('status', '=', 1)->with('client')->get();
+        $orders =  Order::where('status', '=', 1)
+                        ->orderBy('id', 'DESC')
+                        ->with('client')
+                        ->paginate(20);
         return view('Orders.dispatchedOrder', ['orders' => $orders]);
     }
 
     public function holdedOrder()
     {
-        $orders =  Order::where('status', '=', -1)->with('client', 'holdOrder')->get();
+        $orders =  Order::where('status', '=', -1)
+                          ->orderBy('id', "DESC")
+                          ->with('client', 'holdOrder')
+                          ->paginate(20);
         return view('Orders.holdOrders', ['orders' => $orders]);
     }
 
@@ -151,9 +157,19 @@ class OrdersController extends Controller
         Order::where('id', $id)
              ->update(['status' => -1]);
 
-        return HoldOrder::create([
+        HoldOrder::create([
             'order_id' => $id,
             'reason' => $reason
         ]);
+
+        return redirect()->route('orders');
+    }
+
+    public function search(Request $request)
+    {
+        $q = $request->q;
+        $orders =  DB::select(DB::raw("SELECT * FROM (SELECT orders.id, products.name, clients.first_name, clients.last_name, orders.qty, orders.total_amount, orders.left_eye_power, orders.right_eye_power, orders.shipping_address, orders.receipent_name, orders.status FROM `orders`, `products`, `clients` WHERE orders.product_id = products.id AND orders.client_id = clients.id)AS ord WHERE ord.status = 0 AND ord.name LIKE '%$q%'"));
+        //print_r($q);
+        return view('Orders.index', ['orders' => $orders]);
     }
 }

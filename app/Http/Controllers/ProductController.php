@@ -17,11 +17,15 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        $product =  product::where('id', '=', $product->id)->with('photo')->get();
+        $product =  product::where('id', '=', $product->id)
+                            ->with('photo')
+                            ->with('review', 'Review.client')
+                            ->get();
         if(is_null($product)){
             return "Nothing to Show";
         }
-        return view('Products.detailedView', ['product' => $product]);
+        // return $product[0];
+        return view('Products.detailedView', ['product' => $product[0]]);
     }
 
     public function create()

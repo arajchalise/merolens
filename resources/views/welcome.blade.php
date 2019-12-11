@@ -50,7 +50,7 @@
       <p style="text-align: center; font-size: 18px; font-family: Abyssinica SIL;">
         Eye chasmish are very important for thos whos have some difficult<br> in their eye to see every hing clearly and perfectly
       </p>
-
+      @if(!empty($products))
       <div class="row">
 
         @for($i = 0; $i < 4; $i++)
@@ -71,7 +71,7 @@
         @endfor
 
       </div>
-
+      @endif
     </div>
   <!--latest glasses ends-->
 

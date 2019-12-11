@@ -1,4 +1,5 @@
 @include('Includes.adminHeader')
+@if(Auth::user()->role_id != 3)
   <table class="table">
     <h1 style="text-align: center; margin-bottom: 30px;">Our Clients</h1>
   <thead>
@@ -19,9 +20,13 @@
       <td>{{ $client->address }}</td>
       <td>{{ $client->contact_no }}</td>
       <td>{{ $client->email }}</td>
-      <td> <a href="#" class="btn btn-danger">Delete</a></td>
+      @if(Auth::user()->role_id == 1)<td> <a href="#" class="btn btn-danger">Delete</a></td>
+      @endif
     </tr>
     @endforeach
   </tbody>
 </table>
+ @else
+    <div style="min-height: 300px; text-align: center;"><p style="color: red; font-weight: bold;">You are not authorized</p></div>
+  @endif
   @include('Includes.footer')

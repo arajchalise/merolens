@@ -119,7 +119,7 @@
         <input type="text" placeholder="Search.." id="searchProduct" name="searchProduct">
         {{ csrf_field() }}
       </form>
-      <div id="autocomplete" style="display: none; position: absolute; background-color: #343a40; color: #fff; min-height: 200px; min-width: 450px; z-index: 1000; margin-left: 350px; margin-top: 230px;">
+      <div id="autocomplete" style="display: none; position: absolute; background-color: #343a40; color: #fff; min-height: 200px; min-width: 450px; z-index: 1000; margin-left: 350px; margin-top: 130px;">
         
       </div>
       <ul class="navbar-nav ml-auto">
@@ -135,7 +135,7 @@
           $client = Session::get('client');
         ?>
           <li class="nav-item active" style="margin-top: 15px;">
-          <b>{{ $client->first_name }}</b></a>
+          <b>{{ $client[0]->first_name }}</b></a>
         </li>
         <li class="nav-item active" style="margin-top: 15px;">
           <a href="{{ route('clientLogout') }}" style="color: black"><b>Logout</b></a>
@@ -147,8 +147,9 @@
         </li> -->
         <li class="nav-item dropdown" style="margin-top: 15px;">
         <a href="#" style="font-family: Abyssinica SIL; font-size: 18px; color: black; margin-top: 20px;" id="showCart" onclick="showCart();">
-          <img src="{{asset('images')}}/cart.png" height="30px" width="30px" ><span class="badge badge-dark" style="background-color: green; font-family: Arial;">
-            @if(Session::has('cart'))
+          <img src="{{asset('images')}}/cart.png" height="30px" width="30px" >
+          @if(Session::has('cart'))
+          <span class="badge badge-dark" style="background-color: green; font-family: Arial;">
           {{ $count = count(Session::get('cart'))}}</span>
         </a>
         @if($count != 0)

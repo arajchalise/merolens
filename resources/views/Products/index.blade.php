@@ -1,5 +1,6 @@
  @include('Includes.adminHeader')
   <!--latest glasses-->
+  @if(Auth::user()->role_id != 3)
     <div class="container" style="margin-top: 100px">
       <a class="btn btn-primary btn-lg" href="{{ route('createProduct') }}" style="float: right">Add Products</a>
       <h2 style="text-align: center;font-family: Abyssinica SIL;color:  #0b397a"><b>AVAILABLE PRODUCTS</b></h2><br>
@@ -27,5 +28,8 @@
       </div>
 
     </div>
+    @else
+    <div style="min-height: 300px; text-align: center;"><p style="color: red; font-weight: bold;">You are not authorized</p></div>
+  @endif
   <!--latest glasses ends-->
 @include('Includes.footer')

@@ -51,6 +51,7 @@ Route::get('/checkout', 'ClientsController@checkout')->name('checkout');
 Route::get('/hold', 'OrdersController@hold')->name('hold');
 Route::get('/holdedOrder', 'OrdersController@holdedOrder')->name('holdedOrder');
 Route::post('/makeOrder', 'OrdersController@makeOrder')->name('makeOrder');
+Route::post('/searchOrder', 'OrdersController@search')->name('searchOrder');
 
 //users controller
 Route::get('/users', 'UsersController@index')->name('users');
@@ -66,6 +67,7 @@ Route::post('/autocomplete', 'AutoCompleteController@fetch')->name('autocomplete
 
 // Photo
 Route::get('removePic/{id}', 'PhotoController@remove');
+Route::get('/invoice/{order}', 'OrdersController@generateInvoice');
 
 Auth::routes();
 

@@ -16,6 +16,14 @@ class ReviewController extends Controller
     {
         $client = $request->session()->get('client');
         $product_id = $request->product_id;
-        return $client[0]->id." : ".$product_id." : ".$request->review;
+        $review = $request->review;
+        $client_id = $client[0]->id;
+
+        Review::create([
+            'product_id' => $product_id,
+            'client_id' => $client_id,
+            'review' => $review
+        ]);
+        return redirect()->back();
     }
 }
