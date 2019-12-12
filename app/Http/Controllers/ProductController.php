@@ -116,7 +116,14 @@ class ProductController extends Controller
             'photo' => $request->photo
         );
         $request->session()->push('cart', $cart);
-        return redirect()->route('welcome'); 
+        // if(isset($_POST['buynow'])){
+        //     return redirect()->route('checkout');
+        // }
+        if(isset($_POST['buynow'])){
+            return redirect()->route('checkout');
+        } else {
+            return redirect()->route('welcome');
+        } 
     }
 
 
@@ -133,10 +140,11 @@ class ProductController extends Controller
     {
         $qty = $request->get('qty');
         $id = $request->get('id');
-        $sessions = $request->session()->get('cart');
-        $sessions[$id]['qty'] = $qty;
-        $sessions[$id]['amt'] = $sessions[$id]['price']*$qty;
-        $request->session()->put('cart', $sessions);
+        $stock = $this->getStock($id);
+            $sessions = $request->session()->get('cart');
+            $sessions[$id]['qty'] = $qty;
+            $sessions[$id]['amt'] = $sessions[$id]['price']*$qty;
+            $request->session()->put('cart', $sessions);
         return $request->session()->get('cart');
     }
 

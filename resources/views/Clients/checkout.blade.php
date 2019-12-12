@@ -229,7 +229,9 @@ if(Session::has('client')){
     <th scope="row"><td colspan="4"><b>Total Amount</b></td><td colspan="2"><b>Rs. <?php echo $amt; ?></b></td></th>
   </tbody>
 </table>
+@if(count(Session::get('cart')) != 0)
 <input type="submit" id="" class="btn btn-success btn-lg" style="border-radius: 0px; float: right;" value="Place Order Now">
+@endif
 </div>
 </form>
 </div>

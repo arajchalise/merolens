@@ -62,11 +62,15 @@
             <div class="form-group row">
               <label for="qty" class="col-sm-3 col-form-label">Qty</label>
               <div class="col-sm-3">
-                <input type="number" name="qty" class="form-control" id="qty" placeholder="Qty" min="1" value="1" required onchange="myFunct();">
+                <input type="number" name="qty" class="form-control" id="qty{{ $product->id }}" placeholder="Qty" min="1" value="1" required onchange="myFunct({{ $product->id }});">
               </div>
-              <div><p id="stock" style="color: red; font-weight: bold;"></p></div>
+              <div><p id="stock" style="color: red; font-weight: bold;">@if($product->stock < 1) Out of Stock @endif</p></div>
             </div>
+            @if($product->stock > 1)
             <input type="submit" name="" value="Add to Cart" class="btn btn-success" id="addToCart">
+            <input type="submit" name="buynow" value="Buy Now" class="btn btn-primary" id="addToCart">
+            
+            @endif
             </form>
             
           

@@ -120,12 +120,12 @@
   </script>
 
   <script type="text/javascript">
-    function myFunct() {
-      var id = document.getElementById('id').value;
-      var qty = parseInt(document.getElementById('qty').value);
+    function myFunct(id) {
+      //var id = document.getElementById('id').value;
+      var qty = parseInt(document.getElementById('qty'+id).value);
       jQuery.get('/getStock/'+id, function(data) {
          var c = parseInt(data);
-         document.getElementById('qty').max = data;
+         document.getElementById('qty'+id).max = data;
           var remaining = data-qty;
           if(remaining <= 0){
             jQuery('#stock').html('Out of Stock');
@@ -158,7 +158,6 @@ jQuery(window).scroll(function() {
           var link = '<td><a href="#" onclick=removeFromCart('+i+')><span class="badge" style="background-color: red; color: #fff;">X</span></a</td>'
           var img = "<td><img src={{ asset('images') }}/"+data[i]['photo']+" style='width: 40px; height: 40px;'></td>"
             dt += "<tr>"+img+"<td>"+data[i]['name']+"</td><td><input type=number name=qty id=qty"+i+" value="+data[i]['qty']+" onchange=updateQty("+i+") min=1 style=width:50px;></td><td>"+data[i]['amt']+"</td>"+link+"</tr>";
-            console.log(link);
             i++;
         }
         jQuery('#tbl').html(dt);
