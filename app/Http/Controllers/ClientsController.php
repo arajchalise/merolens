@@ -53,7 +53,7 @@ class ClientsController extends Controller
                             ->get();
         if(!empty($client[0])){
             $request->session()->put('client', $client);
-            return $request->session()->get('client');
+            return redirect()->route('welcome');
         } else {
             return "Password Mismatch";
         }

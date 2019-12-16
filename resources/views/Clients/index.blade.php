@@ -16,7 +16,7 @@
     @foreach($clients as $client)
     <tr>
       <th scope="row">{{ $client->id }}</th>
-      <td>{{ $client->name}}</td>
+      <td>{{ $client->first_name}} {{ $client->last_name}}</td>
       <td>{{ $client->address }}</td>
       <td>{{ $client->contact_no }}</td>
       <td>{{ $client->email }}</td>

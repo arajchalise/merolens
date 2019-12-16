@@ -2,10 +2,11 @@
 <div class="container mt-5 mb-5" id="invoice">
       <table class="table">
         <!-- Sellers Detail -->
-        <tr><td colspan="5">Shop Name<br>Shop Address<br>City<br>Country<br>Email<br>Phone<br>Reg No<br><br>Invoice No<br>Payment Method: {{ $orders[0][0]->payment_method }}<br>Status<br><br>Date</td>
+        <tr><td colspan="5">Shop Name<br>Shop Address<br>City<br>Country<br>Email<br>Phone<br>Reg No</td><td colspan="5">Date<br>Invoice No<br>Payment Method: {{ $orders[0][0]->payment_method }}<br>Status<br><br></td></tr>
             <!-- Buyers Details -->
-        <td colspan="5"><b>Billing:</b><br>{{ $orders[0][0]->client->first_name }} {{ $orders[0][0]->client->last_name }}<br>{{ $orders[0][0]->client->address }}, {{ $orders[0][0]->client->city }}, {{ $orders[0][0]->client->state }}, {{ $orders[0][0]->client->country }}<br>{{ $orders[0][0]->client->email }}<br>{{ $orders[0][0]->client->contact_no }}<br><br>
-            <b>Shipping:</b><br>{{ $orders[0][0]->receipent_name }}<br>{{ $orders[0][0]->shipping_address }}<br>{{ $orders[0][0]->receipemt_email }}<br>{{ $orders[0][0]->receipent_contact }}<br><br>{{ $orders[0][0]->shipping_method }}</td></tr>
+        <tr>
+        <td colspan="5"><b>Billing:</b><br>{{ $orders[0][0]->client->first_name }} {{ $orders[0][0]->client->last_name }}<br>{{ $orders[0][0]->client->address }}, {{ $orders[0][0]->client->city }}, {{ $orders[0][0]->client->state }}, {{ $orders[0][0]->client->country }}<br>{{ $orders[0][0]->client->email }}<br>{{ $orders[0][0]->client->contact_no }}</td><td colspan="5">
+            <b>Shipping:</b><br>{{ $orders[0][0]->receipent_name }}<br>{{ $orders[0][0]->shipping_address }}<br>{{ $orders[0][0]->receipent_email }}<br>{{ $orders[0][0]->receipent_contact }}<br><br>Shipping Method: @if($orders[0][0]->shipping_method == 0) Normal @elseif($orders[0][0]->shipping_method == 10) Express @else Platinum @endif</td></tr>
             <tr style="background-color:  #031458 ">
             <th scope="col" style="color: white">SN.</th>
             <th scope="col" style="color: white">Product Name/Options</th>
